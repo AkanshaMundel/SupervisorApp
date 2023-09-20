@@ -1,14 +1,30 @@
-import { Image, StyleSheet, Text, View, TouchableOpacity, RefreshControl, ScrollView, SafeAreaView } from 'react-native'
+import { Image, StyleSheet, Text, View, TouchableOpacity, RefreshControl, ScrollView, SafeAreaView,Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Navbar from '../../components/Navbar/Navbar'
 import { ImageIndex } from '../../assets/AssetIndex'
 import { responsiveHeight } from 'react-native-responsive-dimensions';
 import axios from 'axios'
 import Internet from '../../InternetCheck/Internet';
+import { Camera } from 'react-native-vision-camera';
+
 
 
 const DashBoard = ({ navigation }: any) => {
-
+    const checkCameraPermission = async () => {
+        let status = await Camera.getCameraPermissionStatus();
+        if (status !== 'authorized') {
+            await Camera.requestCameraPermission();
+            status = await Camera.getCameraPermissionStatus();
+            if (status === 'denied') {
+                Alert.alert(
+                    'You will not be able to scan if you do not allow camera access',
+                );
+            }
+        }
+    };
+    useEffect(() => {
+        checkCameraPermission();
+    }, []);
     const handleLoginPress = () => {
         console.log('scannn')
         navigation.navigate('QrScanner')

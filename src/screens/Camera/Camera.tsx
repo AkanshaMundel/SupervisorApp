@@ -1,6 +1,3 @@
-
-
-
 import React, { useEffect, useRef, useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native';
 import { RNCamera } from 'react-native-camera';
